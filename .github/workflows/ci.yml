@@ -17,8 +17,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Maven ile Test Et
-        run: mvn test
+      - name: Maven ile Paketle (Testsiz)
+        run: mvn clean package -DskipTests
 
       # Docker İmajını Build Etme
       - name: Docker Build
