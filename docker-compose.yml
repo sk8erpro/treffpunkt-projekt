@@ -10,7 +10,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   app:
-    image: senin_docker_kullanici_adin/treffpunkt-projekt:latest
+    image: berkaysefer/treffpunkt-projekt:latest
     container_name: treffpunkt-app
     depends_on:
       - db
