@@ -1,24 +1,32 @@
-name: Treffpunkt Java CI
+name: Treffpunkt CI/CD
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
-  build-and-test:
+  build-and-push:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Kodu Cek
         uses: actions/checkout@v4
 
-      - name: Set up Java 17
+      - name: Java 21 Kur
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
-      - name: Build and test with Maven
-        run: mvn clean package
+      - name: Maven ile Test Et
+        run: mvn test
+
+      # Docker İmajını Build Etme
+      - name: Docker Build
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/treffpunkt-projekt:latest .
+
+      # Docker Hub'a Giriş ve Push (Burada Secret'ları kullanacağız)
+      - name: Docker Hub Login
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Docker Push
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/treffpunkt-projekt:latest
