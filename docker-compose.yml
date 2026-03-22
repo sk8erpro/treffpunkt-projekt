@@ -28,3 +28,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30 # Her 30 saniyede bir yeni imaj var mı diye bak
+
+volumes:
+  postgres_data:
